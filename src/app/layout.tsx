@@ -1,17 +1,11 @@
 import type { Metadata } from 'next'
-import { Inter, Raleway } from 'next/font/google'
+import { DM_Sans } from 'next/font/google'
 import './globals.css'
 import { siteContent } from '@/data/content'
 
-const inter = Inter({
+const dmSans = DM_Sans({
   subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap'
-})
-
-const raleway = Raleway({
-  subsets: ['latin'],
-  variable: '--font-raleway',
+  variable: '--font-dm-sans',
   display: 'swap'
 })
 
@@ -19,13 +13,13 @@ export const metadata: Metadata = {
   title: siteContent.meta.title,
   description: siteContent.meta.description,
   keywords: siteContent.meta.keywords,
-  authors: [{ name: 'LANGUAGE WATCH Foundation (LWF)' }],
-  creator: 'LANGUAGE WATCH Foundation (LWF)',
-  publisher: 'LANGUAGE WATCH Foundation (LWF)',
+  authors: [{ name: 'Pill Brook Aquatics' }],
+  creator: 'Pill Brook Aquatics',
+  publisher: 'Pill Brook Aquatics',
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://languagewatchfoundation.org',
+    url: 'https://pillbrookaquatics.com',
     siteName: siteContent.meta.title,
     title: siteContent.meta.title,
     description: siteContent.meta.description,
@@ -63,14 +57,14 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${raleway.variable}`}>
+    <html lang="en" className={dmSans.variable}>
       <head>
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <meta name="theme-color" content="#e7a906" />
+        <meta name="theme-color" content="#1E40AF" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body className={`${inter.className} antialiased`}>
+      <body className={`${dmSans.className} antialiased`}>
         <div className="min-h-screen bg-background font-sans antialiased">
           {children}
         </div>
