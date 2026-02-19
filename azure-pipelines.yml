@@ -3,7 +3,7 @@ trigger:
   - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: 'Test'
 
 variables:
   # Change these to match your project
