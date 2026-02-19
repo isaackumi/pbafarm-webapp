@@ -1,19 +1,63 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
-- main
+  - main
+  - master
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'ubuntu-latest'
+
+variables:
+  # Change these to match your project
+  buildConfiguration: 'Release'
+  nodeVersion: '20.x'          # or '18.x', '22.x' — whatever your app needs
+  workingDirectory: '.'        # '.' if repo root is project root, otherwise './frontend'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+
+- task: NodeTool@0
+  inputs:
+    versionSpec: '$(nodeVersion)'
+  displayName: 'Install Node.js'
 
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    npm ci
+  workingDirectory: $(workingDirectory)
+  displayName: 'npm ci'
+
+- script: |
+    npm run build
+  workingDirectory: $(workingDirectory)
+  displayName: 'npm run build'
+
+# ────────────────────────────────────────────────
+# Archive exactly what the server needs to run
+# ────────────────────────────────────────────────
+- task: ArchiveFiles@2
+  displayName: 'Archive build artifacts'
+  inputs:
+    rootFolderOrFile: '$(workingDirectory)'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/pbafish-build.zip'
+    replaceExistingArchive: true
+    # Only include what's actually needed on the server
+    # Adjust patterns to your project structure
+    includePatterns: |
+      .next/**
+      public/**
+      package.json
+      package-lock.json
+      next.config.js
+      next.config.mjs
+      # .env* is NOT included here — it comes from release variables
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: drop'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+
+# Optional: show size of artifact (good for debugging)
+- script: |
+    du -sh $(Build.ArtifactStagingDirectory)/*
+  displayName: 'Show artifact size'
