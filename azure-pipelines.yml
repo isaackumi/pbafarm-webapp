@@ -36,8 +36,8 @@ steps:
   inputs:
     rootFolderOrFile: '$(workingDirectory)'
     includeRootFolder: false
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/pbafish-build.zip'
+    archiveType: 'tar'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/pbafish-build.tar'
     replaceExistingArchive: true
     # Only include what's actually needed on the server
     # Adjust patterns to your project structure
