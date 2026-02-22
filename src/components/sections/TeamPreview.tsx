@@ -1,139 +1,201 @@
-'use client';
+'use client'
 
-import React from 'react'
-import { motion } from 'framer-motion'
-import { ArrowRight, Users, Star, Fish, User } from 'lucide-react'
+import React, { useRef, useState, useEffect } from 'react'
+import Image from 'next/image'
+import { ArrowRight, ArrowLeft, Users, Fish, User } from 'lucide-react'
 import Link from 'next/link'
 
+const teamMembers: Array<{
+  name: string
+  role: string
+  category: string
+  description: string
+  image?: string
+}> = [
+  {
+    name: 'John Domozoro',
+    role: 'CEO & Founder',
+    category: 'Leadership',
+    description: 'Leading our aquaculture business with expertise and vision. John brings years of experience in sustainable fish farming and community development.',
+    image: '/images/team/JD.jpeg',
+  },
+  {
+    name: 'Farm Operations',
+    role: 'Aquaculture Manager',
+    category: 'Operations',
+    description: 'Managing tilapia farming operations with precision. Ensures optimal growth conditions, water quality, and sustainable practices at our facility.',
+  },
+  {
+    name: 'Quality Control',
+    role: 'Product Standards',
+    category: 'Quality',
+    description: 'Ensuring the highest quality standards for our products. Oversees processing, grading, and compliance from harvest to delivery.',
+  },
+  {
+    name: 'Sales & Partnerships',
+    role: 'Business Development',
+    category: 'Sales',
+    description: 'Building relationships with restaurants, vendors, and wholesalers. Connects our premium tilapia with customers across Ghana.',
+  },
+  {
+    name: 'Supply Chain',
+    role: 'Logistics & Delivery',
+    category: 'Operations',
+    description: 'Coordinating harvest, processing, and delivery schedules. Ensures fresh tilapia reaches your doorstep on time.',
+  },
+]
+
 export default function TeamPreview() {
-    const teamMembers = [
-        {
-            name: "John Domozoro",
-            role: "CEO & Founder",
-            description: "Leading our aquaculture business with expertise and vision",
-            color: "bg-gradient-primary"
-        },
-        {
-            name: "Aquaculture Manager",
-            role: "Farm Operations",
-            description: "Managing our tilapia farming operations with precision",
-            color: "bg-gradient-secondary"
-        },
-        {
-            name: "Quality Control",
-            role: "Product Standards",
-            description: "Ensuring the highest quality standards for our products",
-            color: "bg-gradient-accent"
-        }
-    ]
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const [canScrollLeft, setCanScrollLeft] = useState(false)
+  const [canScrollRight, setCanScrollRight] = useState(true)
 
-    return (
-        <section className="py-24 bg-gradient-to-br from-blue-50 via-red-50 to-white">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                {/* Section Header */}
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-16"
-                >
-                    <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-red-500 text-white px-4 py-2 rounded-full text-sm font-medium mb-6">
-                        <Users className="w-4 h-4" />
-                        Our Team
+  const updateScrollState = () => {
+    const el = scrollRef.current
+    if (!el) return
+    setCanScrollLeft(el.scrollLeft > 0)
+    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 1)
+  }
+
+  useEffect(() => {
+    updateScrollState()
+    const el = scrollRef.current
+    if (!el) return
+    const ro = new ResizeObserver(updateScrollState)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
+
+  const scroll = (direction: 'left' | 'right') => {
+    const el = scrollRef.current
+    if (!el) return
+    const amount = el.clientWidth * 0.8
+    el.scrollBy({ left: direction === 'left' ? -amount : amount, behavior: 'smooth' })
+    setTimeout(updateScrollState, 350)
+  }
+
+  return (
+    <section className="section-spacing bg-white">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-12 lg:mb-16 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+          <div>
+            <p className="text-sm font-semibold text-primary-600 uppercase tracking-wider mb-2 flex items-center gap-2">
+              <Users className="w-4 h-4" />
+              Our Team
+            </p>
+            <h2 className="text-2xl lg:text-3xl font-bold text-neutral-900 mb-2">
+              Meet Our Expert Team
+            </h2>
+            <p className="text-lg text-neutral-600 leading-relaxed max-w-2xl">
+              Committed to delivering premium tilapia with sustainable farming and exceptional service.
+            </p>
+          </div>
+
+          {/* Navigation arrows */}
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              onClick={() => scroll('left')}
+              disabled={!canScrollLeft}
+              aria-label="Previous team members"
+              className={`w-12 h-12 rounded-full flex items-center justify-center border-2 transition-colors ${
+                canScrollLeft
+                  ? 'border-primary-600 text-primary-600 hover:bg-primary-50'
+                  : 'border-neutral-200 text-neutral-300 cursor-not-allowed'
+              }`}
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => scroll('right')}
+              disabled={!canScrollRight}
+              aria-label="Next team members"
+              className={`w-12 h-12 rounded-full flex items-center justify-center border-2 transition-colors ${
+                canScrollRight
+                  ? 'border-primary-600 text-primary-600 hover:bg-primary-50'
+                  : 'border-neutral-200 text-neutral-300 cursor-not-allowed'
+              }`}
+            >
+              <ArrowRight className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+
+        <div
+          ref={scrollRef}
+          onScroll={updateScrollState}
+          className="flex gap-8 overflow-x-auto pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        >
+          {teamMembers.map((member) => (
+            <div
+              key={member.name}
+              className="flex-shrink-0 w-[320px] sm:w-[360px] snap-start bg-white rounded-2xl shadow-lg border border-neutral-100 overflow-hidden hover:shadow-xl transition-shadow"
+            >
+              {/* Image header */}
+              <div className="relative h-56 bg-gradient-to-br from-primary-100 to-primary-50 overflow-hidden">
+                {member.image ? (
+                  <Image
+                    src={member.image}
+                    alt={member.name}
+                    fill
+                    className="object-cover"
+                    sizes="360px"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-24 h-24 rounded-full bg-primary-600 flex items-center justify-center">
+                      <User className="w-12 h-12 text-white" />
                     </div>
-                    <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
-                        Meet Our Expert Team
-                    </h2>
-                    <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                        Our leadership team is committed to delivering the finest quality tilapia
-                        with sustainable farming practices and exceptional customer service.
-                    </p>
-                </motion.div>
+                  </div>
+                )}
+              </div>
 
-                {/* Team Grid */}
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-                    {teamMembers.map((member, index) => (
-                        <motion.div
-                            key={member.name}
-                            initial={{ opacity: 0, y: 50 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, delay: index * 0.1 }}
-                            viewport={{ once: true }}
-                            className="group"
-                        >
-                            <div className="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100">
-                                {/* Avatar */}
-                                <div className="relative h-64 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-                                    <div className={`w-32 h-32 ${member.color} rounded-full flex items-center justify-center shadow-large group-hover:scale-110 transition-transform duration-700`}>
-                                        <User className="w-16 h-16 text-white" />
-                                    </div>
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                </div>
-
-                                {/* Content */}
-                                <div className="p-6">
-                                    <div className="flex items-center gap-2 mb-2">
-                                        <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                                        <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                                        <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                                        <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                                        <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                                    </div>
-                                    <h3 className="text-xl font-bold text-gray-900 mb-2">{member.name}</h3>
-                                    <p className="text-blue-600 font-medium mb-3">{member.role}</p>
-                                    <p className="text-gray-600 text-sm leading-relaxed">{member.description}</p>
-                                </div>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
-
-                {/* Call to Action */}
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.3 }}
-                    viewport={{ once: true }}
-                    className="relative"
+              {/* Card body */}
+              <div className="p-6 lg:p-8">
+                <span className="text-xs font-semibold text-primary-600 uppercase tracking-wider">
+                  {member.category}
+                </span>
+                <h3 className="text-xl font-bold text-neutral-900 mt-2 mb-1">{member.name}</h3>
+                <p className="text-primary-600 font-medium text-base mb-4">{member.role}</p>
+                <p className="text-base text-neutral-600 leading-relaxed mb-6">
+                  {member.description}
+                </p>
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 text-primary-600 font-semibold hover:text-primary-700 transition-colors"
                 >
-                    <div className="bg-gradient-to-r from-blue-600 via-red-600 to-blue-700 rounded-3xl p-12 text-white relative overflow-hidden">
-                        {/* Background Pattern */}
-                        <div className="absolute inset-0 opacity-10">
-                            <div className="absolute inset-0" style={{
-                                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-                            }}></div>
-                        </div>
-
-                        <div className="relative z-10">
-                            <h3 className="text-2xl lg:text-3xl font-bold text-white mb-4">
-                                Join Our Aquaculture Team
-                            </h3>
-                            <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
-                                Discover opportunities to grow with our expanding aquaculture business.
-                                We&apos;re always looking for passionate individuals to join our team.
-                            </p>
-
-                            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                                <Link
-                                    href="/team"
-                                    className="group inline-flex items-center gap-2 px-8 py-4 bg-white text-blue-600 font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-                                >
-                                    <span>Meet Full Team</span>
-                                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-                                </Link>
-                                <Link
-                                    href="/contact"
-                                    className="group inline-flex items-center gap-2 px-8 py-4 border-2 border-white text-white font-semibold rounded-2xl hover:bg-white hover:text-blue-600 transition-all duration-300 transform hover:scale-105"
-                                >
-                                    <span>Get In Touch</span>
-                                    <Fish className="w-4 h-4 group-hover:scale-110 transition-transform duration-300" />
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-                </motion.div>
+                  Get in touch
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
             </div>
-        </section>
-    )
-} 
+          ))}
+        </div>
+
+
+        <div className="mt-16 bg-primary-600 rounded-2xl p-8 lg:p-12 text-center">
+          <h3 className="text-xl lg:text-2xl font-bold text-white mb-3">Join Our Aquaculture Team</h3>
+          <p className="text-primary-100 text-base leading-relaxed mb-8 max-w-xl mx-auto">
+            We&apos;re always looking for passionate individuals to join our expanding aquaculture business.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/team"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-primary-600 font-semibold rounded-lg hover:bg-primary-50 transition-colors"
+            >
+              Meet full team
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white/10 transition-colors"
+            >
+              <Fish className="w-4 h-4" />
+              Get in touch
+            </Link>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  )
+}

@@ -166,7 +166,7 @@ export const siteContent = {
     description: "Ready to order fresh tilapia? Contact us for pricing, delivery options, or to visit our farm.",
     phone: "+233 XXX XXX XXX",
     mobile: ["+233 XXX XXX XXX", "+233 XXX XXX XXX"],
-    email: "info@pillbrookaquatics.com",
+    email: "john.domozoro@pbafish.com",
     website: "pillbrookaquatics.com",
     location: "Gyakiti, Eastern Region, Ghana",
     address: "Pill Brook Aquatics, Gyakiti, Eastern Region, Ghana",
@@ -228,7 +228,7 @@ export const siteContent = {
     contact: {
       address: "Gyakiti, Eastern Region, Ghana",
       phone: "+233 XXX XXX XXX",
-      email: "info@pillbrookaquatics.com"
+      email: "john.domozoro@pbafish.com"
     },
     social: {
       facebook: "#",

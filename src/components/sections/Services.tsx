@@ -1,333 +1,173 @@
-'use client';
+'use client'
 
-import React from 'react'
-import { motion } from 'framer-motion'
-import { Fish, Award, Leaf, Truck, Clock, Package, MapPin } from 'lucide-react'
+import React, { useRef, useState, useEffect } from 'react'
+import Link from 'next/link'
+import { Fish, Truck, Package, Leaf, Award, Clock, MapPin, ArrowRight, ChevronDown } from 'lucide-react'
 
 export default function Services() {
-    const services = [
-        {
-            icon: <Fish className="w-8 h-8" />,
-            title: 'Fresh Tilapia',
-            description: 'Premium quality tilapia harvested daily from our sustainable aquaculture farm',
-            features: ['Live fish', 'Fresh fillets', 'Whole fish', 'Premium grade'],
-            color: 'bg-gradient-primary',
-            accent: 'text-primary-600'
-        },
-        {
-            icon: <Truck className="w-8 h-8" />,
-            title: 'Local Delivery',
-            description: 'Fast and reliable delivery service to local communities and businesses',
-            features: ['Same day delivery', 'Local pickup', 'Bulk orders', 'Scheduled delivery'],
-            color: 'bg-gradient-secondary',
-            accent: 'text-secondary-600'
-        },
-        {
-            icon: <Package className="w-8 h-8" />,
-            title: 'Processing Services',
-            description: 'Professional fish processing and packaging to meet your specific needs',
-            features: ['Custom packaging', 'Size grading', 'Quality control', 'Hygienic processing'],
-            color: 'bg-gradient-accent',
-            accent: 'text-accent-600'
-        }
-    ]
+  const processRef = useRef<HTMLDivElement>(null)
+  const [isInView, setIsInView] = useState(false)
 
-    const benefits = [
-        {
-            icon: <Leaf className="w-6 h-6" />,
-            title: 'Sustainable',
-            description: 'Environmentally responsible aquaculture practices'
-        },
-        {
-            icon: <Award className="w-6 h-6" />,
-            title: 'Quality Assured',
-            description: 'Highest standards in fish farming and processing'
-        },
-        {
-            icon: <Clock className="w-6 h-6" />,
-            title: 'Fresh Daily',
-            description: 'Harvested and delivered fresh every day'
-        },
-        {
-            icon: <MapPin className="w-6 h-6" />,
-            title: 'Local Source',
-            description: 'Supporting local economy and communities'
-        }
-    ]
-
-    return (
-        <section id="services" className="py-20 bg-neutral-50 relative overflow-hidden">
-            {/* Background Elements */}
-            <div className="absolute inset-0">
-                <div className="absolute top-20 left-20 w-64 h-64 bg-primary-100 rounded-full mix-blend-multiply filter blur-xl opacity-50"></div>
-                <div className="absolute bottom-20 right-20 w-48 h-48 bg-secondary-100 rounded-full mix-blend-multiply filter blur-xl opacity-50"></div>
-            </div>
-
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                {/* Section Header */}
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-16"
-                >
-                    <div className="inline-flex items-center space-x-3 bg-primary-50 px-6 py-3 rounded-full shadow-soft border border-primary-200 mb-6">
-                        <Fish className="w-5 h-5 text-primary-600" />
-                        <span className="font-semibold text-primary-700">OUR SERVICES</span>
-                    </div>
-                    <h2 className="text-4xl lg:text-6xl font-bold text-neutral-900 mb-6">
-                        Complete <span className="bg-gradient-primary bg-clip-text text-transparent">Aquaculture</span> Solutions
-                    </h2>
-                    <p className="text-xl text-neutral-600 max-w-3xl mx-auto leading-relaxed">
-                        From farm to table, we provide comprehensive tilapia farming and delivery services
-                        to meet all your aquaculture needs in Ghana.
-                    </p>
-                </motion.div>
-
-                {/* Services Grid */}
-                <div className="grid lg:grid-cols-3 gap-8 mb-20">
-                    {services.map((service, index) => (
-                        <motion.div
-                            key={service.title}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, delay: index * 0.2 }}
-                            viewport={{ once: true }}
-                            className="group"
-                        >
-                            <div className="bg-white p-8 rounded-2xl shadow-soft border border-neutral-200 hover:shadow-large transition-all duration-300 h-full group-hover:-translate-y-2">
-                                {/* Service Icon */}
-                                <div className={`w-16 h-16 ${service.color} rounded-xl shadow-medium flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                                    {service.icon}
-                                </div>
-
-                                {/* Service Content */}
-                                <h3 className="text-2xl font-bold text-neutral-900 mb-4">{service.title}</h3>
-                                <p className="text-neutral-600 leading-relaxed mb-6">{service.description}</p>
-
-                                {/* Features List */}
-                                <ul className="space-y-3">
-                                    {service.features.map((feature, featureIndex) => (
-                                        <motion.li
-                                            key={feature}
-                                            initial={{ opacity: 0, x: -20 }}
-                                            whileInView={{ opacity: 1, x: 0 }}
-                                            transition={{ duration: 0.4, delay: (index * 0.2) + (featureIndex * 0.1) }}
-                                            viewport={{ once: true }}
-                                            className="flex items-center space-x-3"
-                                        >
-                                            <div className={`w-2 h-2 ${service.color.replace('bg-gradient-', 'bg-')} rounded-full`}></div>
-                                            <span className="text-neutral-700 font-medium">{feature}</span>
-                                        </motion.li>
-                                    ))}
-                                </ul>
-
-                                {/* CTA Button */}
-                                <motion.button
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    className="mt-8 w-full px-6 py-4 bg-white text-neutral-900 font-semibold rounded-xl shadow-soft hover:shadow-medium transition-all duration-300 border border-neutral-200 hover:border-primary-300"
-                                >
-                                    Learn More
-                                </motion.button>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
-
-                {/* Benefits Section */}
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    viewport={{ once: true }}
-                    className="bg-gradient-primary p-8 rounded-2xl shadow-large"
-                >
-                    <div className="text-center mb-12">
-                        <h3 className="text-3xl font-bold text-white mb-4">Why Choose PBA?</h3>
-                        <p className="text-primary-100 text-lg">
-                            The advantages that set us apart in the aquaculture industry
-                        </p>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {benefits.map((benefit, index) => (
-                            <motion.div
-                                key={benefit.title}
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 0.6, delay: index * 0.1 }}
-                                viewport={{ once: true }}
-                                className="text-center"
-                            >
-                                <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-xl shadow-medium flex items-center justify-center text-white mx-auto mb-4">
-                                    {benefit.icon}
-                                </div>
-                                <h4 className="text-xl font-bold text-white mb-3">{benefit.title}</h4>
-                                <p className="text-primary-100 leading-relaxed">{benefit.description}</p>
-                            </motion.div>
-                        ))}
-                    </div>
-                </motion.div>
-
-                {/* Process Section */}
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    viewport={{ once: true }}
-                    className="mt-20"
-                >
-                    <div className="text-center mb-12">
-                        <h3 className="text-3xl font-bold text-neutral-900 mb-6">Our Process</h3>
-                        <p className="text-xl text-neutral-600 max-w-2xl mx-auto">
-                            From farm to your table - our complete aquaculture process
-                        </p>
-                    </div>
-
-                    <div className="relative">
-                        {/* Process Flow Line */}
-                        <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-primary-200 via-secondary-200 to-accent-200 transform -translate-y-1/2 z-0"></div>
-
-                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
-                            {[
-                                {
-                                    step: '01',
-                                    title: 'Farming',
-                                    description: 'Sustainable tilapia farming in our state-of-the-art aquaculture facility',
-                                    icon: <Fish className="w-8 h-8" />,
-                                    color: 'bg-gradient-primary',
-                                    details: ['Water quality monitoring', 'Optimal feeding schedules', 'Health management', 'Growth tracking']
-                                },
-                                {
-                                    step: '02',
-                                    title: 'Harvesting',
-                                    description: 'Daily fresh harvest using the most hygienic and efficient methods',
-                                    icon: <Package className="w-8 h-8" />,
-                                    color: 'bg-gradient-secondary',
-                                    details: ['Size grading', 'Quality assessment', 'Hygienic handling', 'Temperature control']
-                                },
-                                {
-                                    step: '03',
-                                    title: 'Processing',
-                                    description: 'Professional processing and quality control to ensure premium standards',
-                                    icon: <Award className="w-8 h-8" />,
-                                    color: 'bg-gradient-accent',
-                                    details: ['Quality inspection', 'Custom processing', 'Safe packaging', 'Cold chain maintenance']
-                                },
-                                {
-                                    step: '04',
-                                    title: 'Delivery',
-                                    description: 'Fast and reliable delivery to your doorstep or business location',
-                                    icon: <Truck className="w-8 h-8" />,
-                                    color: 'bg-gradient-primary',
-                                    details: ['Same day delivery', 'Local pickup options', 'Bulk order handling', 'Customer satisfaction']
-                                }
-                            ].map((process, index) => (
-                                <motion.div
-                                    key={process.step}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.6, delay: index * 0.2 }}
-                                    viewport={{ once: true }}
-                                    className="relative group"
-                                >
-                                    <div className="bg-white p-6 rounded-2xl shadow-soft border border-neutral-200 text-center hover:shadow-large transition-all duration-300 group-hover:-translate-y-2 relative z-10">
-                                        {/* Step Number */}
-                                        <div className="text-4xl font-bold text-primary-600 mb-4">{process.step}</div>
-
-                                        {/* Icon */}
-                                        <div className={`w-16 h-16 ${process.color} rounded-xl shadow-medium flex items-center justify-center text-white mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                                            {process.icon}
-                                        </div>
-
-                                        <h4 className="text-xl font-bold text-neutral-900 mb-3">{process.title}</h4>
-                                        <p className="text-neutral-600 text-sm leading-relaxed mb-4">{process.description}</p>
-
-                                        {/* Process Details */}
-                                        <div className="space-y-2">
-                                            {process.details.map((detail, detailIndex) => (
-                                                <motion.div
-                                                    key={detail}
-                                                    initial={{ opacity: 0, x: -10 }}
-                                                    whileInView={{ opacity: 1, x: 0 }}
-                                                    transition={{ duration: 0.4, delay: (index * 0.2) + (detailIndex * 0.1) }}
-                                                    viewport={{ once: true }}
-                                                    className="flex items-center space-x-2 text-xs"
-                                                >
-                                                    <div className={`w-2 h-2 ${process.color.replace('bg-gradient-', 'bg-')} rounded-full`}></div>
-                                                    <span className="text-neutral-600 font-medium">{detail}</span>
-                                                </motion.div>
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                    {/* Connector Arrow */}
-                                    {index < 3 && (
-                                        <div className="hidden lg:block absolute top-1/2 -right-4 w-8 h-8 transform -translate-y-1/2 z-20">
-                                            <div className="w-full h-full bg-white rounded-full shadow-medium flex items-center justify-center">
-                                                <div className="w-4 h-4 bg-gradient-to-r from-primary-400 to-secondary-400 rounded-full"></div>
-                                            </div>
-                                        </div>
-                                    )}
-                                </motion.div>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Process Summary */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.4 }}
-                        viewport={{ once: true }}
-                        className="mt-12 bg-gradient-to-r from-primary-50 to-secondary-50 p-8 rounded-2xl border border-primary-100"
-                    >
-                        <div className="text-center">
-                            <h4 className="text-2xl font-bold text-neutral-900 mb-4">Quality Assured Every Step</h4>
-                            <p className="text-neutral-600 max-w-3xl mx-auto">
-                                Our comprehensive process ensures that every tilapia reaches your table with the highest quality standards.
-                                From sustainable farming practices to careful processing and reliable delivery, we maintain excellence throughout the entire journey.
-                            </p>
-                        </div>
-                    </motion.div>
-                </motion.div>
-
-                {/* CTA Section */}
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    viewport={{ once: true }}
-                    className="mt-20 text-center"
-                >
-                    <div className="bg-white p-8 rounded-2xl shadow-large border border-neutral-200">
-                        <h3 className="text-3xl font-bold text-neutral-900 mb-4">
-                            Ready to Experience Premium Tilapia?
-                        </h3>
-                        <p className="text-xl text-neutral-600 mb-8 max-w-2xl mx-auto">
-                            Contact us today to place your order or learn more about our aquaculture services
-                        </p>
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <motion.button
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                className="px-8 py-4 bg-gradient-primary text-white font-semibold rounded-xl shadow-medium hover:shadow-large transition-all duration-300"
-                            >
-                                Order Now
-                            </motion.button>
-                            <motion.button
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                className="px-8 py-4 bg-white text-primary-600 font-semibold rounded-xl shadow-soft hover:shadow-medium transition-all duration-300 border border-neutral-200"
-                            >
-                                Contact Us
-                            </motion.button>
-                        </div>
-                    </div>
-                </motion.div>
-            </div>
-        </section>
+  useEffect(() => {
+    const el = processRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => entry.isIntersecting && setIsInView(true),
+      { threshold: 0.2 }
     )
-} 
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  const services = [
+    {
+      icon: Fish,
+      title: 'Fresh Tilapia',
+      description: 'Premium quality tilapia harvested daily from our sustainable aquaculture farm',
+      features: ['Live fish', 'Fresh fillets', 'Whole fish', 'Premium grade'],
+    },
+    {
+      icon: Truck,
+      title: 'Local Delivery',
+      description: 'Fast and reliable delivery to local communities and businesses',
+      features: ['Same day delivery', 'Local pickup', 'Bulk orders', 'Scheduled delivery'],
+    },
+    {
+      icon: Package,
+      title: 'Processing Services',
+      description: 'Professional fish processing and packaging to meet your needs',
+      features: ['Custom packaging', 'Size grading', 'Quality control', 'Hygienic processing'],
+    },
+  ]
+
+  const benefits = [
+    { icon: Leaf, title: 'Sustainable', description: 'Environmentally responsible aquaculture' },
+    { icon: Award, title: 'Quality Assured', description: 'Highest standards in fish farming' },
+    { icon: Clock, title: 'Fresh Daily', description: 'Harvested and delivered fresh every day' },
+    { icon: MapPin, title: 'Local Source', description: 'Supporting local economy and communities' },
+  ]
+
+  const processSteps = [
+    { title: 'Farming', icon: Fish, label: 'Farm-managed' },
+    { title: 'Harvesting', icon: Package, label: 'Quality-controlled' },
+    { title: 'Processing', icon: Award, label: 'Platform-managed' },
+    { title: 'Delivery', icon: Truck, label: 'Customer-delivered' },
+  ]
+
+  return (
+    <section id="services" className="section-spacing bg-neutral-50">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <p className="text-sm font-semibold text-primary-600 uppercase tracking-wider mb-4">Our Services</p>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-neutral-900 mb-6">
+            Complete Aquaculture Solutions
+          </h2>
+          <p className="text-lg text-neutral-600 leading-relaxed">
+            From farm to table: comprehensive tilapia farming and delivery services for Ghana.
+          </p>
+        </div>
+
+        <div className="grid lg:grid-cols-3 gap-8 mb-20">
+          {services.map((service) => (
+            <div
+              key={service.title}
+              className="bg-white rounded-2xl shadow-md border border-neutral-100 p-8 hover:shadow-lg transition-shadow"
+            >
+              <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center text-primary-600 mb-6">
+                {React.createElement(service.icon, { className: 'w-6 h-6' })}
+              </div>
+              <h3 className="text-xl font-bold text-neutral-900 mb-3">{service.title}</h3>
+              <p className="text-base text-neutral-600 leading-relaxed mb-6">{service.description}</p>
+              <ul className="space-y-2">
+                {service.features.map((f) => (
+                  <li key={f} className="flex items-center gap-2 text-base text-neutral-600">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary-500" />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        <div className="bg-primary-600 rounded-2xl p-8 lg:p-12 mb-20">
+          <div className="text-center mb-12">
+            <h3 className="text-2xl font-bold text-white mb-2">Why Choose PBA?</h3>
+            <p className="text-primary-100">The advantages that set us apart</p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {benefits.map((benefit) => (
+              <div key={benefit.title} className="text-center">
+                <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center text-white mx-auto mb-4">
+                  {React.createElement(benefit.icon, { className: 'w-6 h-6' })}
+                </div>
+                <h4 className="font-semibold text-white mb-2">{benefit.title}</h4>
+                <p className="text-primary-100 text-sm leading-relaxed">{benefit.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Process section - Azure-style card format */}
+        <div ref={processRef} className="py-12 lg:py-20">
+          <div className="mb-12 lg:mb-16">
+            <h3 className="text-2xl lg:text-3xl font-bold text-neutral-900 mb-2">
+              Learn how we deliver
+            </h3>
+            <p className="text-lg text-neutral-600 leading-relaxed max-w-2xl">
+              Our end-to-end process from farm to your table.
+            </p>
+          </div>
+
+          <div
+            className={`bg-white rounded-2xl shadow-lg border border-neutral-100 overflow-hidden transition-all duration-700 ${
+              isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
+            {/* Visual flow diagram header */}
+            <div className="bg-gradient-to-br from-primary-50 to-white px-8 lg:px-12 py-10 lg:py-14 border-b border-neutral-100">
+              <div className="flex flex-col lg:flex-row items-center justify-center gap-4 lg:gap-8">
+                {processSteps.map((step, index) => (
+                  <React.Fragment key={step.title}>
+                    <div className="flex flex-col items-center text-center">
+                      <div className="w-16 h-16 lg:w-20 lg:h-20 rounded-2xl bg-primary-600 flex items-center justify-center shadow-lg mb-3">
+                        {React.createElement(step.icon, { className: 'w-8 h-8 lg:w-10 lg:h-10 text-white' })}
+                      </div>
+                      <span className="text-base font-semibold text-neutral-900 block">{step.title}</span>
+                      <span className="text-sm text-neutral-500 block mt-0.5">{step.label}</span>
+                    </div>
+                    {index < processSteps.length - 1 && (
+                      <>
+                        <ChevronDown className="w-6 h-6 text-primary-400 lg:hidden shrink-0" />
+                        <ArrowRight className="hidden lg:block w-6 h-6 text-primary-400 shrink-0" />
+                      </>
+                    )}
+                  </React.Fragment>
+                ))}
+              </div>
+            </div>
+
+            {/* Card body */}
+            <div className="p-8 lg:p-10">
+              <h4 className="text-xl lg:text-2xl font-bold text-neutral-900 mb-4">
+                From farm to your table: quality at every step
+              </h4>
+              <p className="text-base lg:text-lg text-neutral-600 leading-relaxed mb-8 max-w-3xl">
+                We farm tilapia sustainably, harvest daily with care, process to the highest standards,
+                and deliver fresh to your door. Each stage is managed for quality, traceability, and
+                your complete satisfaction.
+              </p>
+              <Link
+                href="/#about"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-colors"
+              >
+                Learn more
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}

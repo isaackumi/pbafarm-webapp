@@ -1,15 +1,18 @@
 import type { Metadata } from 'next'
-import { DM_Sans } from 'next/font/google'
+import { Source_Sans_3 } from 'next/font/google'
 import './globals.css'
 import { siteContent } from '@/data/content'
+import Navigation from '@/components/sections/Navigation'
+import Footer from '@/components/sections/Footer'
 
-const dmSans = DM_Sans({
+const sourceSans = Source_Sans_3({
   subsets: ['latin'],
-  variable: '--font-dm-sans',
+  variable: '--font-source-sans',
   display: 'swap'
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://pillbrookaquatics.com'),
   title: siteContent.meta.title,
   description: siteContent.meta.description,
   keywords: siteContent.meta.keywords,
@@ -57,16 +60,18 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={dmSans.variable}>
+    <html lang="en" className={sourceSans.variable}>
       <head>
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <meta name="theme-color" content="#1E40AF" />
+        <meta name="theme-color" content="#01599f" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body className={`${dmSans.className} antialiased`}>
-        <div className="min-h-screen bg-background font-sans antialiased">
-          {children}
+      <body className={`${sourceSans.className} antialiased`}>
+        <div className="min-h-screen bg-white font-sans antialiased flex flex-col">
+          <Navigation />
+          <main className="flex-1">{children}</main>
+          <Footer />
         </div>
       </body>
     </html>

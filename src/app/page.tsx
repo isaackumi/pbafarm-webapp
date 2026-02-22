@@ -1,5 +1,6 @@
-import Navigation from '@/components/sections/Navigation'
 import Hero from '@/components/sections/Hero'
+import FarmVideo from '@/components/sections/FarmVideo'
+import FarmGallery from '@/components/sections/FarmGallery'
 import About from '@/components/sections/About'
 import Services from '@/components/sections/Services'
 import Testimonials from '@/components/sections/Testimonials'
@@ -13,16 +14,16 @@ export default function Home() {
   return (
     <main className="relative">
       <ScrollProgress />
-      <Navigation />
       <div className="relative">
         <Hero />
+        <FarmVideo />
+        <FarmGallery />
         <About />
         <Services />
         <Testimonials />
         <TeamPreview />
         <Contact />
       </div>
-      <Footer />
       <FloatingMenu />
     </main>
   )

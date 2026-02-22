@@ -8,7 +8,7 @@ pool:
 variables:
   # Change these to match your project
   buildConfiguration: 'Release'
-  nodeVersion: '20.x'          # or '18.x', '22.x' — whatever your app needs
+  nodeVersion: '20.x'          # or '18.x', '22.x' - whatever your app needs
   workingDirectory: '.'        # '.' if repo root is project root, otherwise './frontend'
 
 steps:
@@ -48,7 +48,7 @@ steps:
       package-lock.json
       next.config.js
       next.config.mjs
-      # .env* is NOT included here — it comes from release variables
+      # .env* is NOT included here - it comes from release variables
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: drop'
