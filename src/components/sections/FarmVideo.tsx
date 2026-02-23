@@ -1,16 +1,31 @@
 'use client'
 
-import React from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import { Play, MapPin } from 'lucide-react'
 
 const VIDEO_SRC = '/images/farm/farm-video.mp4'
 
 export default function FarmVideo() {
+  const ref = useRef<HTMLDivElement>(null)
+  const [inView, setInView] = useState(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const ob = new IntersectionObserver(([e]) => e.isIntersecting && setInView(true), { threshold: 0.2 })
+    ob.observe(el)
+    return () => ob.disconnect()
+  }, [])
+
   return (
-    <section className="section-spacing bg-neutral-50">
+    <section ref={ref} className="section-spacing bg-neutral-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
+          <div
+            className={`text-center mb-12 transition-all duration-700 ${
+              inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
             <p className="text-sm font-semibold text-primary-600 uppercase tracking-wider mb-4 flex items-center justify-center gap-2">
               <MapPin className="w-4 h-4" />
               Our Farm
@@ -23,8 +38,12 @@ export default function FarmVideo() {
             </p>
           </div>
 
-          <div className="relative">
-            <div className="relative rounded-2xl overflow-hidden shadow-large border border-neutral-100 bg-neutral-900 aspect-video">
+          <div
+            className={`relative transition-all duration-700 delay-150 ${
+              inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
+            <div className="relative rounded-2xl overflow-hidden shadow-large border border-neutral-100 bg-neutral-900 aspect-video card-hover-lift">
               <video
                 src={VIDEO_SRC}
                 controls

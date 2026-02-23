@@ -167,7 +167,7 @@ export const siteContent = {
     phone: "+233 XXX XXX XXX",
     mobile: ["+233 XXX XXX XXX", "+233 XXX XXX XXX"],
     email: "john.domozoro@pbafish.com",
-    website: "pillbrookaquatics.com",
+    website: "pbafish.com",
     location: "Gyakiti, Eastern Region, Ghana",
     address: "Pill Brook Aquatics, Gyakiti, Eastern Region, Ghana",
     officeHours: "Monday - Saturday: 7:00 AM - 6:00 PM",

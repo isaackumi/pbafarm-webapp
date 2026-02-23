@@ -1,9 +1,19 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { Mail, Phone, MapPin, Clock, Send, MessageSquare } from 'lucide-react'
 
 export default function Contact() {
+  const headerRef = useRef<HTMLDivElement>(null)
+  const [headerIn, setHeaderIn] = useState(false)
+
+  useEffect(() => {
+    const el = headerRef.current
+    if (!el) return
+    const ob = new IntersectionObserver(([e]) => e.isIntersecting && setHeaderIn(true), { threshold: 0.2 })
+    ob.observe(el)
+    return () => ob.disconnect()
+  }, [])
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' })
 
@@ -29,7 +39,12 @@ export default function Contact() {
   return (
     <section id="contact" className="section-spacing bg-neutral-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div
+          ref={headerRef}
+          className={`text-center max-w-3xl mx-auto mb-16 transition-all duration-700 ${
+            headerIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}
+        >
           <p className="text-sm font-semibold text-primary-600 uppercase tracking-wider mb-4 flex items-center justify-center gap-2">
             <MessageSquare className="w-4 h-4" />
             Get In Touch
@@ -102,7 +117,7 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="btn-hover-lift w-full flex items-center justify-center gap-2 px-6 py-4 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none transition-colors"
               >
                 {isSubmitting ? (
                   <>
@@ -120,7 +135,7 @@ export default function Contact() {
           </div>
 
           <div className="space-y-6">
-            <div className="bg-white rounded-2xl shadow-soft border border-neutral-100 p-8 lg:p-10">
+            <div className="card-hover-lift bg-white rounded-2xl shadow-soft border border-neutral-100 p-8 lg:p-10">
               <h3 className="text-xl font-bold text-neutral-900 mb-2">Contact Information</h3>
               <p className="text-neutral-500 text-sm mb-6">Reach us directly for orders or inquiries.</p>
               <div className="space-y-4">

@@ -114,7 +114,7 @@
 
   .animate-fade-in {
     opacity: 0;
-    animation: fadeIn 0.5s ease-out forwards;
+    animation: fadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
   .animate-fade-in-delay-1 { animation-delay: 0.1s; }
   .animate-fade-in-delay-2 { animation-delay: 0.2s; }
@@ -122,9 +122,48 @@
   .animate-fade-in-delay-4 { animation-delay: 0.4s; }
   .animate-fade-in-delay-5 { animation-delay: 0.5s; }
   .animate-fade-in-delay-6 { animation-delay: 0.6s; }
+  .animate-fade-in-delay-7 { animation-delay: 0.7s; }
+  .animate-fade-in-delay-8 { animation-delay: 0.8s; }
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(24px); }
     to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-slide-up {
+    opacity: 0;
+    transform: translateY(32px);
+    animation: slideUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  .animate-slide-up-delay-1 { animation-delay: 0.1s; }
+  .animate-slide-up-delay-2 { animation-delay: 0.15s; }
+  .animate-slide-up-delay-3 { animation-delay: 0.2s; }
+  .animate-slide-up-delay-4 { animation-delay: 0.25s; }
+  @keyframes slideUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-scale-in {
+    opacity: 0;
+    transform: scale(0.96);
+    animation: scaleIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  @keyframes scaleIn {
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .btn-hover-lift {
+    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+  }
+  .btn-hover-lift:hover {
+    transform: translateY(-2px);
+  }
+
+  .card-hover-lift {
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+  }
+  .card-hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.12);
   }
 
   .marquee {

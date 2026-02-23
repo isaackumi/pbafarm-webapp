@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { Menu, X, Fish } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
@@ -60,12 +61,28 @@ export default function Navigation() {
           >
             <Link
               href="/"
-              className={`flex items-center gap-2 shrink-0 transition-colors ${
+              className={`flex items-center gap-3 shrink-0 transition-all duration-300 ${
                 showPill ? 'text-neutral-900' : 'text-white'
               }`}
+              aria-label="Pill Brook Aquatics home"
             >
-              <Fish className="w-5 h-5" />
-              <span className="text-lg font-bold">Pill Brook</span>
+              <span
+                className={`flex items-center justify-center rounded-xl p-1 transition-all duration-300 ${
+                  showPill
+                    ? 'bg-neutral-50 ring-1 ring-neutral-100'
+                    : 'bg-white/95 shadow-sm ring-1 ring-white/50'
+                }`}
+              >
+                <Image
+                  src="/images/logo.png"
+                  alt=""
+                  width={40}
+                  height={40}
+                  className="object-contain"
+                  priority
+                />
+              </span>
+              <span className="text-lg font-bold tracking-tight">Pill Brook</span>
             </Link>
 
             <div className="hidden lg:flex items-center gap-1">

@@ -6,7 +6,9 @@ import { Fish, Truck, Package, Leaf, Award, Clock, MapPin, ArrowRight, ChevronDo
 
 export default function Services() {
   const processRef = useRef<HTMLDivElement>(null)
+  const headerRef = useRef<HTMLDivElement>(null)
   const [isInView, setIsInView] = useState(false)
+  const [headerIn, setHeaderIn] = useState(false)
 
   useEffect(() => {
     const el = processRef.current
@@ -17,6 +19,14 @@ export default function Services() {
     )
     observer.observe(el)
     return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const el = headerRef.current
+    if (!el) return
+    const ob = new IntersectionObserver(([e]) => e.isIntersecting && setHeaderIn(true), { threshold: 0.2 })
+    ob.observe(el)
+    return () => ob.disconnect()
   }, [])
 
   const services = [
@@ -57,7 +67,12 @@ export default function Services() {
   return (
     <section id="services" className="section-spacing bg-neutral-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div
+          ref={headerRef}
+          className={`text-center max-w-3xl mx-auto mb-16 transition-all duration-700 ${
+            headerIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}
+        >
           <p className="text-sm font-semibold text-primary-600 uppercase tracking-wider mb-4">Our Services</p>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-neutral-900 mb-6">
             Complete Aquaculture Solutions
@@ -71,7 +86,7 @@ export default function Services() {
           {services.map((service) => (
             <div
               key={service.title}
-              className="bg-white rounded-2xl shadow-md border border-neutral-100 p-8 hover:shadow-lg transition-shadow"
+              className="card-hover-lift bg-white rounded-2xl shadow-md border border-neutral-100 p-8"
             >
               <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center text-primary-600 mb-6">
                 {React.createElement(service.icon, { className: 'w-6 h-6' })}

@@ -12,8 +12,11 @@ const sourceSans = Source_Sans_3({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://pillbrookaquatics.com'),
-  title: siteContent.meta.title,
+  metadataBase: new URL('https://pbafish.com'),
+  title: {
+    default: siteContent.meta.title,
+    template: '%s | Pill Brook Aquatics',
+  },
   description: siteContent.meta.description,
   keywords: siteContent.meta.keywords,
   authors: [{ name: 'Pill Brook Aquatics' }],
@@ -22,7 +25,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://pillbrookaquatics.com',
+    url: 'https://pbafish.com',
     siteName: siteContent.meta.title,
     title: siteContent.meta.title,
     description: siteContent.meta.description,
@@ -54,6 +57,34 @@ export const metadata: Metadata = {
   },
 }
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': ['Organization', 'LocalBusiness'],
+  name: 'Pill Brook Aquatics',
+  alternateName: 'PBA',
+  description: siteContent.meta.description,
+  url: 'https://pbafish.com',
+  logo: 'https://pbafish.com/images/logo.png',
+  image: 'https://pbafish.com/images/og-image.jpg',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Gyakiti',
+    addressRegion: 'Eastern Region',
+    addressCountry: 'GH',
+  },
+  contactPoint: {
+    '@type': 'ContactPoint',
+    email: siteContent.contact.email,
+    contactType: 'customer service',
+    areaServed: 'GH',
+    availableLanguage: 'English',
+  },
+  areaServed: {
+    '@type': 'Country',
+    name: 'Ghana',
+  },
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -66,6 +97,10 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <meta name="theme-color" content="#01599f" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </head>
       <body className={`${sourceSans.className} antialiased`}>
         <div className="min-h-screen bg-white font-sans antialiased flex flex-col">

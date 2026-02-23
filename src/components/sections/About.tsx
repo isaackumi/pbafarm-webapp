@@ -1,9 +1,19 @@
 'use client'
 
-import React from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import { Fish, Award, Users, Leaf } from 'lucide-react'
 
 export default function About() {
+  const headerRef = useRef<HTMLDivElement>(null)
+  const [headerIn, setHeaderIn] = useState(false)
+
+  useEffect(() => {
+    const el = headerRef.current
+    if (!el) return
+    const ob = new IntersectionObserver(([e]) => e.isIntersecting && setHeaderIn(true), { threshold: 0.2 })
+    ob.observe(el)
+    return () => ob.disconnect()
+  }, [])
   const features = [
     { icon: Fish, title: 'Fresh Harvest', description: 'Daily fresh tilapia from our sustainable aquaculture farm' },
     { icon: Award, title: 'Premium Quality', description: 'Highest standards in fish farming and processing' },
@@ -21,7 +31,12 @@ export default function About() {
   return (
     <section id="about" className="section-spacing bg-neutral-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div
+          ref={headerRef}
+          className={`text-center max-w-3xl mx-auto mb-16 transition-all duration-700 ${
+            headerIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}
+        >
           <p className="text-sm font-semibold text-primary-600 uppercase tracking-wider mb-4">About Us</p>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-neutral-900 mb-6">
             Leading Tilapia Farm in Ghana
@@ -49,7 +64,7 @@ export default function About() {
               {features.map((feature, index) => (
                 <div
                   key={feature.title}
-                  className="bg-white p-6 rounded-xl shadow-soft border border-neutral-100"
+                  className="card-hover-lift bg-white p-6 rounded-xl shadow-soft border border-neutral-100"
                 >
                 <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center text-primary-600 mb-3">
                   {React.createElement(feature.icon, { className: 'w-5 h-5' })}
@@ -61,7 +76,7 @@ export default function About() {
             </div>
           </div>
 
-          <div className="relative">
+          <div className="relative card-hover-lift">
             <div className="bg-white rounded-xl shadow-soft overflow-hidden border border-neutral-100">
               <video
                 src="/images/farm/farm-video.mp4"

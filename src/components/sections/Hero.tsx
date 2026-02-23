@@ -46,14 +46,14 @@ export default function Hero() {
           <div className="flex flex-col sm:flex-row gap-4">
             <Link
               href="/order"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary-600 text-white font-semibold rounded-xl shadow-soft hover:bg-primary-700 transition-colors duration-200"
+              className="group btn-hover-lift inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary-600 text-white font-semibold rounded-xl shadow-soft hover:bg-primary-700 hover:shadow-lg transition-colors duration-200"
             >
               Get Started
-              <ArrowRight className="w-5 h-5" />
+              <ArrowRight className="w-5 h-5 transition-transform duration-200 group-hover:translate-x-1" />
             </Link>
             <Link
               href="/#about"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-xl border-2 border-white/40 hover:bg-white/20 transition-colors duration-200"
+              className="btn-hover-lift inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-xl border-2 border-white/40 hover:bg-white/20 transition-colors duration-200"
             >
               Learn More
             </Link>
@@ -64,7 +64,7 @@ export default function Hero() {
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
         <a
           href="#about"
-          className="flex flex-col items-center gap-2 text-white/80 hover:text-white transition-colors"
+          className="flex flex-col items-center gap-2 text-white/80 hover:text-white transition-colors duration-300"
           aria-label="Scroll to content"
         >
           <span className="text-sm font-medium">Scroll to explore</span>

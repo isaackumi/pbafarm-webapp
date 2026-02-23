@@ -2,7 +2,8 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { Fish, Phone, Mail, MapPin, Facebook, Twitter, Instagram, ArrowUp } from 'lucide-react'
+import Image from 'next/image'
+import { Phone, Mail, MapPin, Facebook, Twitter, Instagram, ArrowUp } from 'lucide-react'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
@@ -39,9 +40,15 @@ export default function Footer() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-4 gap-16 lg:gap-20 py-8">
             <div className="lg:col-span-1">
-              <Link href="/" className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-white/10 rounded-lg flex items-center justify-center">
-                  <Fish className="w-6 h-6 text-white" />
+              <Link href="/" className="flex items-center gap-3 mb-6" aria-label="Pill Brook Aquatics home">
+                <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-white overflow-hidden flex-shrink-0">
+                  <Image
+                    src="/images/logo.png"
+                    alt="Pill Brook Aquatics"
+                    width={48}
+                    height={48}
+                    className="object-contain"
+                  />
                 </div>
                 <div>
                   <span className="text-xl font-bold block">Pill Brook</span>
